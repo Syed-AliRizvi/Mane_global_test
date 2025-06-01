@@ -26,10 +26,10 @@ Mane_global_test/
 ## Setup Instructions
 
 ### 1. Clone the Repository
-
+```
 git clone https://github.com/Syed-AliRizvi/Mane_global_test.git
 cd Mane_global_test
-
+```
 ### 2. Create a Virtual Environment (optional but recommended)
 
 - Mac/Linux:
