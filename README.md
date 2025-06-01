@@ -25,12 +25,16 @@ Mane_global_test/
 
 ## Setup Instructions
 
-### 1. Clone the Repository
+Clone the Repository
 ```
 git clone https://github.com/Syed-AliRizvi/Mane_global_test.git
 cd Mane_global_test
 ```
-### 2. Create a Virtual Environment (optional but recommended)
+---
+
+## View Section 1 (Time series analysis)
+
+### 1. Create a Virtual Environment (optional but recommended)
 
 - Mac/Linux:
     ```
@@ -43,7 +47,7 @@ cd Mane_global_test
     .\timeseries_env\Scripts\Activate.ps1
     ```
 
-### 3. Install Dependencies
+### 2. Install Dependencies
 ```
 pip install --upgrade pip
 pip install -r requirements.txt
@@ -54,7 +58,7 @@ pip install jupyterlab ipykernel
 python -m ipykernel install --user --name=timeseries_env --display-name "Python (timeseries_env)"
 ```
 
-### 4. Launch Jupyter Notebook
+### 3. Launch Jupyter Notebook
 
 ```
 jupyter lab 
