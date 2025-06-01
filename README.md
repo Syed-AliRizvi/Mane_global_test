@@ -71,6 +71,10 @@ jupyter notebook
 ```
 - Open `q1_answer/scripts/test.ipynb` in Jupyter and run all cells.
 
+### 4. Deactivate the virtual environment when done
+```
+deactivate
+```
 ---
 
 ## View Section 2 (Vue static page)
@@ -82,13 +86,10 @@ Then in your browser, go to:  `http://localhost:8000/q2_solution_vue_app/index.h
 
 ---
 
-## Section 3 (Written answers)
-- Open `q3_solution_de_questions/section2_answers.docx` in any word processor.
+## View Section 3 (Written answers)
+Open `q3_solution_de_questions/section2_answers.docx` in any word processor.
 
-## Deactivate the virtual environment when done**
-```
-deactivate
-```
+
 
 ---
 
