@@ -1,0 +1,15 @@
+# Ignore Python virtual environment folder
+timeseries_env/
+
+# Bytecode and caches
+__pycache__/
+*.py[cod]
+*.ipynb_checkpoints
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Environment files we’ll generate
+requirements.txt
+environment.yml
+

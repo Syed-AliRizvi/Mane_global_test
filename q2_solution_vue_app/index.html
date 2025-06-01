@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quarterly Data Table (Vue CDN)</title>
+  <style>
+    /* ────────────────────────────────────────────────────────────────────────────────
+    body styling
+    ───────────────────────────────────────────────────────────────────────────────── */
+    body {
+      font-family: sans-serif;
+      margin: 2rem;
+      background-color: #f9f9f9;
+    }
+    h2 {
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    /* ────────────────────────────────────────────────────────────────────────────────
+       Table and cell styling:
+       - Collapsed borders so cells share lines.
+       - Full-width table.
+       - Light box shadow.
+    ───────────────────────────────────────────────────────────────────────────────── */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
+    }
+
+    /* ────────────────────────────────────────────────────────────────────────────────
+       Header row styling as required by question:
+       - Grey background (#555)
+       - White text
+    ───────────────────────────────────────────────────────────────────────────────── */
+    thead {
+      background-color: #555;
+      color: white;
+    }
+
+    /* ────────────────────────────────────────────────────────────────────────────────
+       Table cells (both <th> and <td>):
+       - Padding for spacing.
+       - Bottom border only (for row separation).
+       - Center‐aligned text. 
+    ───────────────────────────────────────────────────────────────────────────────── */
+    th, td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+
+    /* ────────────────────────────────────────────────────────────────────────────────
+       Hover effect on body rows:
+       - Changes background to a very light grey when you hover over a row.
+    ───────────────────────────────────────────────────────────────────────────────── */
+    tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* ────────────────────────────────────────────────────────────────────────────────
+       Footer note:
+       - Smaller, gray text. 
+    ───────────────────────────────────────────────────────────────────────────────── */
+    .footer-note {
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- ─────────────────────────────────────────────────────────────────────────────────
+       This <div id="app"> is where Vue will “mount.” 
+  ───────────────────────────────────────────────────────────────────────────────── -->
+  <div id="app">
+    <h2>Quarterly Data Table</h2>
+
+    <!--
+      ────────────────────────────────────────────────────────────────────────────────
+      Create a table:
+        1) <thead> – read a row of <th> elements based on “columns” read from the quarter csv header.
+        2) <tbody> – for each “row” object in our data array, render one <tr>,
+           then inside it render each cell by iterating over the same “columns”
+           in order.
+
+      Vue directives:
+        • v-for="col in columns" – loop over the “columns” array to create header cells.
+        • v-for="(row, rowIndex) in rows" – loop over each row object (each is a dictionary
+          built from one CSV line).
+        • :key helps Vue track elements; here we use rowIndex for each row, and col for each cell.
+
+      Whenever “rows” or “columns” changes, Vue re‐renders this entire <table> body.
+    ───────────────────────────────────────────────────────────────────────────────── -->
+    <table>
+      <thead>
+        <tr>
+          <th v-for="col in columns" :key="col">{{ col }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
+          <!--
+            For each column we output row[col]. 
+          -->
+          <td v-for="col in columns" :key="col">{{ row[col] }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 
+      ────────────────────────────────────────────────────────────────────────────────
+      This piece is optional—a small “footnote” under the table. You can remove
+      or modify it as you like.                                                               
+    ───────────────────────────────────────────────────────────────────────────────── -->
+    <div class="footer-note">
+      <em>Source: quarterly_data.csv</em>
+    </div>
+  </div> <!-- end of #app -->
+
+  <!-- ─────────────────────────────────────────────────────────────────────────────────
+       This <script> tag loads Vue 3 from the “unpkg” CDN and provides a global object named “Vue”.
+  ───────────────────────────────────────────────────────────────────────────────── -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <!-- ─────────────────────────────────────────────────────────────────────────────────
+      In createApp({ … }):
+          • data(): returns an object with “columns” and “rows” (both empty arrays initially).
+          • mounted(): runs after the HTML is parsed and the Vue 
+            component is attached to <div id="app">.                                        
+          .mount('#app') attaches this logic to the <div id="app"> above.           
+  ───────────────────────────────────────────────────────────────────────────────── -->
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          // columns: an array of strings, e.g. ['cnt','qname','start_date','end_date', …]
+          columns: [],
+          // rows: an array of objects, where each object’s keys match “columns”.
+          // E.g. [{ cnt: '9', qname: '20231', start_date: '12/27/2022', … }, …]
+          rows: []
+        };
+      },
+      async mounted() {
+        try {
+          // 1) Fetch the CSV file via HTTP
+          const response = await fetch('../q1_solution_time_series_analysis/input_data/quarter_dates.csv');
+          if (!response.ok) {
+            console.error('Failed to fetch CSV:', response.status, response.statusText);
+            return;
+          }
+          // 2) Read the response as plain text
+          const text = await response.text();
+
+          // 3) Split into lines by newline character
+          //    trim() removes any trailing newline or whitespace
+          const lines = text.trim().split('\n');
+          if (lines.length === 0) {
+            console.warn('CSV is empty or improperly formatted.');
+            return;
+          }
+
+          // 4) The first line is the header row – split it by commas into an array of column names
+          //    Example: ['cnt','qname','start_date','end_date','start_date_prior','end_date_prior']
+          this.columns = lines[0].split(',');
+
+          // 5) The remaining lines are data rows
+          this.rows = lines.slice(1).map(line => {
+            // 5a) Split this single line by commas -> array of cell values
+            const values = line.split(',');
+
+            // 5b) Build an object that maps each column name to its corresponding cell value
+            let obj = {};
+            this.columns.forEach((colName, idx) => {
+              // If there are fewer values than columns, undefined cells appear as empty strings
+              obj[colName] = values[idx] ?? '';
+            });
+            return obj;
+          });
+
+          // ue re‐renders the <table> above because “columns” and “rows” changed.
+        } catch (error) {
+          console.error('Error while fetching or parsing CSV:', error);
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
