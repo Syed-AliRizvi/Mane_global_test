@@ -36,6 +36,8 @@ cd Mane_global_test
 
 ### 1. Create a Virtual Environment (optional but recommended)
 
+Open a terminal or command prompt. Open the directory where you have downloaded the 'Mane_global_test' repository and create a virtual environment using the commands below.
+
 - Mac/Linux:
     ```
     python3 -m venv timeseries_env
@@ -72,15 +74,16 @@ jupyter notebook
 ---
 
 ## View Section 2 (Vue static page)
+Open a terminal or command prompt. Open the directory where you have downloaded the 'Mane_global_test' repository. Run the code below to start a minimal HTTP server on port 8000 serving everything in your current directory.
 ```
 python -m http.server 8000
 ```
-- In your browser, go to:  `http://localhost:8000/q2_answer/index.html`
+Then in your browser, go to:  `http://localhost:8000/q2_solution_vue_app/index.html`
 
 ---
 
 ## Section 3 (Written answers)
-- Open `q3_answer/section2_answers.docx` in any word processor.
+- Open `q3_solution_de_questions/section2_answers.docx` in any word processor.
 
 ## Deactivate the virtual environment when done**
 ```
