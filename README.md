@@ -5,18 +5,21 @@ This repository contains code and answers for the Mane Global data engineering t
 ---
 
 ## Project Structure
-
+```
 Mane_global_test/
 ├── q1_solution_time_series_analysis/
-│ ├── input_data/                       # Contains quarter_dates.csv and daily_data.csv
-│ ├── output_data/                      # Contains the generated quarterly_data.csv
-│ └── scripts/                          # Jupyter notebook (mane_global_test_20250601.ipynb) for Section 1
+│ ├── input_data/                               # Contains quarter_dates.csv and daily_data.csv
+│ ├── output_data/                              # Contains the generated quarterly_data.csv
+│ └── scripts/                                  # Jupyter notebook (mane_global_test_20250601.ipynb) for Section 1
 ├── q2_solution_vue_app/
-│ └── index.html                        # Vue static page displaying the quarterly table
+│ └── index.html                                # Vue static page displaying the quarterly table
 ├── q3_solution_de_questions/
-|  └── section2_answers.docx            # Written answers for Section 2
-└── README.md                           # Project documentation
-
+|  └── section2_answers.docx                    # Written answers for Section 2
+├── .gitignore
+├── requirements.txt
+├── Mane Global Capital Management Test.docx    # Questions for Mane Global CM. 
+└── README.md                                   # Project documentation
+```
 
 ---
 
@@ -41,14 +44,24 @@ cd Mane_global_test
     ```
 
 ### 3. Install Dependencies
-
+```
 pip install --upgrade pip
 pip install -r requirements.txt
+```
+if you want to use the virtual environment as a jupyter notebook kernel run the following
+```
+pip install jupyterlab ipykernel
+python -m ipykernel install --user --name=timeseries_env --display-name "Python (timeseries_env)"
+```
 
 ### 4. Launch Jupyter Notebook
 
 ```
-jupyter lab
+jupyter lab 
+```
+or 
+```
+jupyter notebook
 ```
 - Open `q1_answer/scripts/test.ipynb` in Jupyter and run all cells.
 
